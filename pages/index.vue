@@ -3,39 +3,31 @@
     低代码平台是一种能够让用户通过可视化拖拽和简单配置，快速构建应用程序的开发工具。它大大降低了开发门槛，使非专业开发者也能参与到应用开发中，提高了开发效率和灵活性。
   </div>
 
-  <component v-for="(item, index) in pageData" :key="index" :is="item.component" :config="item"></component>
+  <component 
+    v-for="(item, index) in pageData" 
+    :key="index" 
+    :is="item.component" 
+    :data="item.data"
+    :sub-data="item.subData"
+  >
+  </component>
 </template>
 
 <script setup>
 import { reactive } from 'vue'
-
-// const Cards = ref('Cards')
-const pageData = reactive([
-  {
-    "component": resolveComponent('Cards'),
-    "title": "卡片组件自定义标题1",
-    "list": Array.from({ length: 5 }, () => ({
-      "card": resolveComponent('Card'),
-      "img": `https://img2.baidu.com/it/u=3577407992,732771609&fm=253&fmt=auto&app=138&f=JPG?w=281&h=500`
-    }))
-  },
-  {
-    "component": resolveComponent('Cards'),
-    "title": "卡片组件自定义标题2",
-    "list": Array.from({ length: 5 }, () => ({
-      "card": resolveComponent('Card'),
-      "img": `https://img2.baidu.com/it/u=3146104370,1037124710&fm=253&fmt=auto&app=138&f=PNG?w=500&h=652`
-    }))
-  },
-  {
-    "component": resolveComponent('Cards'),
-    "title": "卡片组件自定义标题2",
-    "list": Array.from({ length: 5 }, () => ({
-      "card": resolveComponent('CardA'),
-      "img": `https://img2.baidu.com/it/u=3577407992,732771609&fm=253&fmt=auto&app=138&f=JPG?w=281&h=500`
-    }))
+import pageJSON from '@/pageData/index.json'
+const Cards = resolveComponent('Cards')
+const componentMap = {
+  Cards,
+  // 其他组件...
+}
+const pageData = reactive(pageJSON.map(item => {
+  return {
+    ...item,
+    // component: resolveComponent("Cards")
+    component: componentMap[item.component]
   }
-])
+}))
 </script>
 
 <style lang="scss">

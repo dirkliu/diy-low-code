@@ -1,6 +1,6 @@
 <template>
   <div class="card" :style="{ flexDirection, rowGap }">
-    <img class="card-img" :src="img" alt="Card Image">
+    <img class="card-img" :src="data.img" alt="Card Image">
     <h3 class="card-title">{{ cardTitle }}</h3>
     <div class="card-subtitle">{{ cardSubtitle }}</div>
     <div class="card-text">{{ cardText }}</div>
@@ -22,13 +22,11 @@ defineOptions({
 })
 
 defineProps({
-  name: {
-    type: String,
-    default: 'Card'
-  },
-  img: {
-    type: String,
-    default: 'https://img1.baidu.com/it/u=3484182907,1571493837&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=400'
+  data: {
+    type: Object,
+    default() {
+      return {}
+    }
   }
 })
 </script>

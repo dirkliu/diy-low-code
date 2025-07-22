@@ -1,12 +1,17 @@
 <template>
   <div class="cards">
     <div class="cards-outer">
-          <h2 class="cards-title">{{ config.title }}</h2>
-          <div class="cards-subtitle">{{ config.subTitle }}</div>
-          <div class="cards-text" v-if="config.text">{{ config.text }}</div>
+          <h2 class="cards-title">{{ data.title }}</h2>
+          <div class="cards-subtitle">{{ data.subTitle }}</div>
+          <div class="cards-text" v-if="data.text">{{ data.text }}</div>
     </div>
     <div class="cards-list">
-      <Card class="card-item" v-for="(item, index) in config.list" :img="item.img" :key="index"></Card>
+      <!-- <Card class="card-item" v-for="(item, index) in config.list" :img="item.img" :key="index"></Card> -->
+       <component v-for="(item, index) in subComponents" 
+        :is="item.component" 
+        :key="index"
+        :data="item.data"
+      />
     </div>
     <div class="cards-btns">
       <button>按钮</button>
@@ -18,24 +23,32 @@
 defineOptions({
   name: 'Cards'
 })
-defineProps({
-  config: {
+const props = defineProps({
+  data: {
     type: Object,
     default() {
-      return {
-        title: '卡片标题',
-        subTitle: '卡片副标题',
-        text: '卡片内容',
-        list: [
-          {
-            'name': resolveComponent('Card'),
-            "img": "https://img2.baidu.com/it/u=3577407992,732771609&fm=253&fmt=auto&app=138&f=JPG?w=281&h=500"
-          }
-        ]
-      }
+      return {}
+    }
+  },
+  subData: {
+    type: Array,
+    default() {
+      return []
     }
   }
 })
+
+const Card = resolveComponent('Card')
+const CardA = resolveComponent('CardA')
+const componentMap = {
+  Card,
+  CardA
+}
+console.log('props.subData:', props.subData)
+const subComponents = reactive(props.subData.map(item =>({
+  ...item,
+  component: componentMap[item.component]
+})))
 </script>
 
 <style lang="scss" scoped>
