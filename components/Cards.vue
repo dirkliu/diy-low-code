@@ -1,17 +1,13 @@
 <template>
   <div class="cards">
     <div class="cards-outer">
-          <h2 class="cards-title">{{ data.title }}</h2>
-          <div class="cards-subtitle">{{ data.subTitle }}</div>
-          <div class="cards-text" v-if="data.text">{{ data.text }}</div>
+      <h2 class="cards-title">{{ data.title }}</h2>
+      <div class="cards-subtitle">{{ data.subTitle }}</div>
+      <div class="cards-text" v-if="data.text">{{ data.text }}</div>
     </div>
     <div class="cards-list">
       <!-- <Card class="card-item" v-for="(item, index) in config.list" :img="item.img" :key="index"></Card> -->
-       <component v-for="(item, index) in subComponents" 
-        :is="item.component" 
-        :key="index"
-        :data="item.data"
-      />
+      <component v-for="(item, index) in subComponents" :is="item.component" :key="index" :data="item.data" />
     </div>
     <div class="cards-btns">
       <button>按钮</button>
@@ -38,22 +34,35 @@ const props = defineProps({
   }
 })
 
-const Card = resolveComponent('Card')
-const CardA = resolveComponent('CardA')
+
+
+const Card = markRaw(resolveComponent('Card'))
+const CardA = markRaw(resolveComponent('CardA'))
 const componentMap = {
   Card,
   CardA
 }
-console.log('props.subData:', props.subData)
-const subComponents = reactive(props.subData.map(item =>({
-  ...item,
-  component: componentMap[item.component]
-})))
+
+const subComponents = computed(() =>
+  (Array.isArray(props.subData) ? props.subData : []).map(item => ({
+    ...item,
+    component: componentMap[item.component]
+  }))
+)
+
+// defineComputed({
+//   subComponents() {
+//     return props.subData.map(item => ({
+//       ...item,
+//       component: componentMap[item.component]
+//     }))
+//   }
+// })
 </script>
 
 <style lang="scss" scoped>
 .cards {
-  padding: 3.125em max(calc(50% - 600px),1.5vw);
+  padding: 3.125em max(calc(50% - 600px), 1.5vw);
 
   .cards-list {
     display: flex;

@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "name": "模板1",
+    "component": "Cards",
+    "data": {
+      "title": "卡片组件自定义标题1"
+    },
+    "subData": [
+      {
+        "component": "Card",
+        "data": {
+          "img": "https://img2.baidu.com/it/u=3577407992,732771609&fm=253&fmt=auto&app=138&f=JPG?w=281&h=500"
+        }
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "模板2",
+    "component": "Cards",
+    "data": {
+      "title": "卡片组件自定义标题2"
+    },
+    "subData": [
+      {
+        "component": "Card",
+        "data": {
+          "img": "https://img2.baidu.com/it/u=2054978784,2557745907&fm=253&fmt=auto&app=138&f=JPEG?w=247&h=285"
+        }
+      }
+    ]
+  }
+]

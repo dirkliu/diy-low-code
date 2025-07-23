@@ -2,25 +2,18 @@
   <div class="intro">
     低代码平台是一种能够让用户通过可视化拖拽和简单配置，快速构建应用程序的开发工具。它大大降低了开发门槛，使非专业开发者也能参与到应用开发中，提高了开发效率和灵活性。
   </div>
-
-  <component 
-    v-for="(item, index) in pageData" 
-    :key="index" 
-    :is="item.component" 
-    :data="item.data"
-    :sub-data="item.subData"
-  >
-  </component>
 </template>
 
 <script setup>
 import { reactive } from 'vue'
 import pageJSON from '@/pageData/index.json'
+
 const Cards = resolveComponent('Cards')
 const componentMap = {
   Cards,
   // 其他组件...
 }
+
 const pageData = reactive(pageJSON.map(item => {
   return {
     ...item,
@@ -32,11 +25,6 @@ const pageData = reactive(pageJSON.map(item => {
 
 <style lang="scss">
 @import url("~/assets/css/global.scss");
-
-* {
-  margin: 0;
-  box-sizing: border-box;
-}
 
 .intro {
   max-width: 900px;
