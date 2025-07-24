@@ -12,9 +12,9 @@
 
 <script setup>
 import { reactive } from 'vue'
-import pageJSON from '@/pageData/index.json'
+import pageJSON from '@/pageData/testing.json'
 
-const Cards = resolveComponent('Cards')
+const Cards = markRaw(resolveComponent('Cards'))
 const componentMap = {
   Cards,
   // 其他组件...

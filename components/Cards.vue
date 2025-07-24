@@ -1,16 +1,15 @@
 <template>
-  <div class="cards">
+  <div class="cards" :style="{...styleVars}">
     <div class="cards-outer">
       <h2 class="cards-title">{{ data.title }}</h2>
       <div class="cards-subtitle">{{ data.subTitle }}</div>
       <div class="cards-text" v-if="data.text">{{ data.text }}</div>
     </div>
-    <div class="cards-list">
-      <!-- <Card class="card-item" v-for="(item, index) in config.list" :img="item.img" :key="index"></Card> -->
-      <component v-for="(item, index) in subComponents" :is="item.component" :key="index" :data="item.data" />
+    <div class="cards-list" v-if="subComponents?.length">
+      <component v-for="(item, index) in subComponents" :is="item.component" :key="index" :data="item.data" :style="{width: columnWidth}" />
     </div>
-    <div class="cards-btns">
-      <button>按钮</button>
+    <div class="cards-btns" v-if="data.button?.content">
+      <button>{{ data.button.content }}</button>
     </div>
   </div>
 </template>
@@ -20,6 +19,16 @@ defineOptions({
   name: 'Cards'
 })
 const props = defineProps({
+  styleVars: {
+    type: Object,
+    default() {
+      return {
+        "--main-bg": "#f3f3f5",
+        "--section-padding": "3.125em max(calc(50% - 400px), 1.5vw)",
+        "--title-size": "32px"
+      }
+    }
+  },
   data: {
     type: Object,
     default() {
@@ -49,20 +58,16 @@ const subComponents = computed(() =>
     component: componentMap[item.component]
   }))
 )
-
-// defineComputed({
-//   subComponents() {
-//     return props.subData.map(item => ({
-//       ...item,
-//       component: componentMap[item.component]
-//     }))
-//   }
-// })
+const column = computed(() =>
+  (props.data.column && props.data.column > 0) ? props.data.column : 4
+)
+const columnWidth = computed(() => (`calc(100% / ${column.value} - 20px *(${column.value} - 1)/${column.value})`))
 </script>
 
 <style lang="scss" scoped>
 .cards {
-  padding: 3.125em max(calc(50% - 600px), 1.5vw);
+  padding: var(--section-padding);
+  background: var(--main-bg);
 
   .cards-list {
     display: flex;
@@ -72,7 +77,7 @@ const subComponents = computed(() =>
 
   .cards-title {
     text-align: center;
-    font-size: 32px;
+    font-size: var(--title-size);
   }
 
   .cards-subtitle {
