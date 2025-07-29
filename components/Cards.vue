@@ -1,15 +1,22 @@
 <template>
   <div class="cards" :style="{...styleVars}">
     <div class="cards-outer">
-      <h2 class="cards-title">{{ data.title }}</h2>
-      <div class="cards-subtitle">{{ data.subTitle }}</div>
-      <div class="cards-text" v-if="data.text">{{ data.text }}</div>
+      <edit-content class="cards-title" v-model="data.title" tag="h2" :editable="editable" />
+      <edit-content class="cards-subtitle" v-model="data.subTitle" :editable="editable" />
+      <edit-content class="cards-text" v-if="data.text" :editable="editable" />
     </div>
     <div class="cards-list" v-if="subComponents?.length">
-      <component v-for="(item, index) in subComponents" :is="item.component" :key="index" :data="item.data" :style="{width: columnWidth}" />
+      <component 
+        v-for="(item, index) in subComponents" 
+        :is="item.component" 
+        :key="index" 
+        :data="item.data" 
+        :style="{width: columnWidth}" 
+        :editable="editable"
+      />
     </div>
-    <div class="cards-btns" v-if="data.button?.content">
-      <button>{{ data.button.content }}</button>
+    <div class="cards-btns" v-if="data.button?.text">
+       <el-button type="primary" @click="onSubmit">{{ data.button.text }}</el-button>
     </div>
   </div>
 </template>
@@ -19,6 +26,10 @@ defineOptions({
   name: 'Cards'
 })
 const props = defineProps({
+  editable: {
+    type: Boolean,
+    default: false
+  },
   styleVars: {
     type: Object,
     default() {
@@ -62,6 +73,15 @@ const column = computed(() =>
   (props.data.column && props.data.column > 0) ? props.data.column : 4
 )
 const columnWidth = computed(() => (`calc(100% / ${column.value} - 20px *(${column.value} - 1)/${column.value})`))
+
+function onTitleInput(event) {
+  props.data.title = event.target.innerText
+}
+
+function onSubmit() {
+  console.log('提交按钮被点击', props.data.title)
+  // 这里可以添加提交逻辑
+}
 </script>
 
 <style lang="scss" scoped>

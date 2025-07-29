@@ -1,9 +1,9 @@
 <template>
   <div class="card" :style="{ flexDirection, rowGap }">
     <img class="card-img" :src="data.img" alt="Card Image">
-    <h3 class="card-title">{{ cardTitle }}</h3>
-    <div class="card-subtitle">{{ cardSubtitle }}</div>
-    <div class="card-text">{{ cardText }}</div>
+    <edit-content class="card-title" v-model="data.title" :editable="editable" />
+    <edit-content class="card-subtitle" v-model="data.subtitle" :editable="editable" />
+    <edit-content class="card-text" v-model="data.text" :editable="editable" />
   </div>
   
 </template>
@@ -12,10 +12,6 @@
 import { ref } from 'vue';
 const flexDirection = ref('column'); // 可选值：'row', 'column', 'row-reverse', 'column-reverse'
 const rowGap = ref('5px'); // 行间距
-
-const cardTitle = ref('卡片标题1');
-const cardSubtitle = ref('卡片副标题1');
-const cardText = ref('文字内容1');
 
 defineOptions({
   name: 'Card'
@@ -27,6 +23,10 @@ defineProps({
     default() {
       return {}
     }
+  },
+  editable: {
+    type: Boolean,
+    default: false
   }
 })
 </script>
