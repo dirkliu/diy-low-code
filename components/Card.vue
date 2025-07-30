@@ -1,6 +1,6 @@
 <template>
   <div class="card" :style="{ flexDirection, rowGap }">
-    <img class="card-img" :src="data.img" alt="Card Image">
+    <img v-if="data.img" class="card-img" :src="data.img" alt="Card Image">
     <edit-content class="card-title" v-model="data.title" :editable="editable" />
     <edit-content class="card-subtitle" v-model="data.subtitle" :editable="editable" />
     <edit-content class="card-text" v-model="data.text" :editable="editable" />

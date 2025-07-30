@@ -9,18 +9,18 @@
             :data="item.data"
             :sub-data="item.subData"
             :editable="true"
+            @add-card="onAddCard"
           />
         </template>
         <div class="bottom-btns">
-          <el-button
-            class="add-btn"
-            type="primary"
-            @click="showTemplateList = true"
+          <div
+            class="add-dashed-box"
             v-if="!showTemplateList"
-            size="large"
+            @click="showTemplateList = true"
           >
-            + 添加
-          </el-button>
+            <el-icon class="add-icon"><plus /></el-icon>
+            <span class="add-text">添加</span>
+          </div>
         </div>
       </el-splitter-panel>
     </el-splitter>
@@ -44,6 +44,7 @@
 
 <script setup>
 import { ref, markRaw, resolveComponent } from 'vue'
+import { Plus } from '@element-plus/icons-vue'
 import pageJSON from '@/pageData/templates.json'
 
 const Cards = markRaw(resolveComponent('Cards'))
@@ -60,6 +61,15 @@ const pageData = pageJSON.map(item => ({
 function onSelectTemplate(item) {
   selectedTemplates.value.push(item)
   showTemplateList.value = false
+}
+
+function onAddCard (subData) {
+  const newCard = {
+    component: 'Card', // 默认组件类型
+    data: {},
+    subData: subData || []
+  }
+  subData.push(newCard)
 }
 </script>
 
@@ -106,11 +116,33 @@ function onSelectTemplate(item) {
 .bottom-btns {
   margin-top: 20px;
   text-align: center;
+  width: 100%;
 }
 
-.add-btn {
-  font-size: 28px;
-  padding: 24px 60px;
+.add-dashed-box {
+  width: 100%;
+  border: 2px dashed #409eff;
   border-radius: 12px;
+  padding: 32px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  background: #fafcff;
+  &:hover {
+    border-color: #66b1ff;
+    background: #f0faff;
+  }
+  .add-icon {
+    font-size: 36px;
+    color: #409eff;
+    margin-bottom: 8px;
+  }
+  .add-text {
+    font-size: 20px;
+    color: #409eff;
+    font-weight: 500;
+  }
 }
 </style>

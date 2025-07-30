@@ -14,6 +14,14 @@
         :style="{width: columnWidth}" 
         :editable="editable"
       />
+      <div
+        v-if="editable"
+        class="cards-add"
+        @click="$emit('add-card', this.subData)"
+      >
+        <span class="add-icon">+</span>
+        <span class="add-text">添加</span>
+      </div>
     </div>
     <div class="cards-btns" v-if="data.button?.text">
        <el-button type="primary" @click="onSubmit">{{ data.button.text }}</el-button>
@@ -118,6 +126,37 @@ function onSubmit() {
   .cards-btns {
     margin-top: 30px;
     text-align: center;
+  }
+
+  .cards-add {
+    width: v-bind(columnWidth);
+    min-height: 200px;
+    border: 2px dashed #409eff;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: #fafcff;
+    transition: border-color 0.2s, background 0.2s;
+    margin-bottom: 20px;
+
+    &:hover {
+      border-color: #66b1ff;
+      background: #f0faff;
+    }
+
+    .add-icon {
+      font-size: 36px;
+      color: #409eff;
+      margin-bottom: 8px;
+    }
+    .add-text {
+      font-size: 20px;
+      color: #409eff;
+      font-weight: 500;
+    }
   }
 }
 </style>
