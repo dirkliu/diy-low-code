@@ -8,3 +8,4 @@
 ### 参考文档
 * [Nuxt](https://nuxt.zhcndoc.com/docs/4.x/getting-started/installation)  
 * [vue](https://cn.vuejs.org/guide/introduction)
+* [tinymce](https://www.tiny.cloud/my-account/integrate/#vue)

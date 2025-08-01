@@ -10,8 +10,10 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@tinymce/tinymce-vue": "^6.3.0",
     "element-plus": "^2.10.4",
     "nuxt": "^3.17.7",
+    "tinymce": "^8.0.1",
     "vue": "^3.5.17",
     "vue-router": "^4.5.1"
   },
