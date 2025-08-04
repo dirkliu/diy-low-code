@@ -39,6 +39,24 @@
         class="template-item"
       >{{item.name}} --- {{item.id}}</div>
     </el-drawer>
+    <el-drawer
+      v-model="showEditor"
+      title="编辑文本"
+      direction="rtl"
+      size="400px"
+      :with-header="true"
+    >
+      <Editor
+        api-key="x9bktol9e94do9mw5bsxn5hk7g8crh3g7yt9w8gknzgbi5dz"
+        :init="{
+          menubar: 'view',
+          toolbar_location: 'top',
+          toolbar_mode: 'wrap',
+          promotion: false
+        }"
+        initial-value="欢迎使用 TinyMCE 编辑器！"
+      />
+    </el-drawer>
   </div>
 </template>
 
@@ -46,11 +64,12 @@
 import { ref, markRaw, resolveComponent } from 'vue'
 import { Plus } from '@element-plus/icons-vue'
 import pageJSON from '@/pageData/templates.json'
+import Editor from '@tinymce/tinymce-vue'
 
 const Cards = markRaw(resolveComponent('Cards'))
 const componentMap = { Cards }
-
 const showTemplateList = ref(false)
+const showEditor = ref(false)
 const selectedTemplates = ref([])
 
 const pageData = pageJSON.map(item => ({
@@ -66,7 +85,12 @@ function onSelectTemplate(item) {
 function onAddCard (subData) {
   const newCard = {
     component: 'Card', // 默认组件类型
-    data: {},
+    data: {
+      title: '新卡片标题',
+      subtitle: '新卡片副标题',
+      text: '新卡片内容',
+      img: 'https://img2.baidu.com/it/u=2054978784,2557745907&fm=253&fmt=auto&app=138&f=JPEG?w=247&h=285'
+    },
     subData: subData || []
   }
   subData.push(newCard)

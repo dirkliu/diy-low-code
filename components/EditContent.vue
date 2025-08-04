@@ -1,14 +1,31 @@
 <template>
+  <Editor
+    v-if="editable"
+    api-key="x9bktol9e94do9mw5bsxn5hk7g8crh3g7yt9w8gknzgbi5dz"
+    :init="{
+      menubar: false,
+      inline: true,
+      plugins: [
+        'link', 'lists', 'powerpaste',
+        'autolink', 'tinymcespellchecker'
+      ],
+      toolbar: [
+        'undo redo | bold italic underline | fontfamily fontsize',
+        'forecolor backcolor | alignleft aligncenter alignright alignfull | numlist bullist outdent indent'
+      ]
+    }"
+    v-model="model"
+  />
   <component
+    v-else
     :is="tag"
-    :contenteditable="editable"
     :innerHTML="model"
-    @input="onInput"
     class="editable-content"
   ></component>
 </template>
 
 <script setup>
+import Editor from '@tinymce/tinymce-vue'
 const props = defineProps({
   tag: {
     type: String,
@@ -22,9 +39,6 @@ const props = defineProps({
 
 const model = defineModel()
 
-function onInput(event) {
-  model.value = event.target.innerHTML
-}
 </script>
 
 <style lang="scss" scoped>

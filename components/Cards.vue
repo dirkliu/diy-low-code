@@ -17,7 +17,7 @@
       <div
         v-if="editable"
         class="cards-add"
-        @click="$emit('add-card', this.subData)"
+        @click="$emit('add-card', subData)"
       >
         <span class="add-icon">+</span>
         <span class="add-text">添加</span>
